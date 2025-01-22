@@ -17,13 +17,18 @@ namespace Library__Web_.Tests
         public void AddBookTest()
         {
             //arrange
-            var mockLocker = new Mock<ILogger>();
+            var mockLocker = new Mock<ILogger<BookAction>>();
             var mockRepository = new Mock<IBookRepository>();
+            var bookAction = new BookAction(mockRepository.Object, mockLocker.Object);
+            var newBook = new Book(-1, "Title", "Author", 2027, new string[] { "Fiction" }, false);
 
-            
             //act
-
+            bookAction.AddBook(newBook as Book);
             //assert
+            mockLocker.Verify(logger => logger.LogInformation("Add new book."), Times.Once);
+            Assert.Equals(1, newBook.Id);
+            Assert.IsTrue(newBook.IsAviable);
+
         }
     }
 }
