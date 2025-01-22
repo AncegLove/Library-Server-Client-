@@ -18,7 +18,7 @@ internal class Program
                     await ShowAll(client);
                     break;
                 case 2:
-                    Console.WriteLine("Etner Book id");
+                    Console.WriteLine("Etner Book id.");
                     await GetByID(client, GetIntegerInput());
                     break;
                 case 3:
@@ -26,27 +26,27 @@ internal class Program
                     await AddNewBook(client, bookToAdd);
                     break;
                 case 4:
-                    Console.WriteLine("Enter id you want to update");
+                    Console.WriteLine("Enter id you want to update.");
                     var idToUpdate = GetIntegerInput();
                     var bookToUpdate = GetBookInfo();
                     await UpdateBook(client, bookToUpdate, idToUpdate);
                     break;
                 case 5:
-                    Console.WriteLine("Enter id of book you want to delete");                    
+                    Console.WriteLine("Enter id of book you want to delete.");                    
                     await Delete(client, GetIntegerInput());
                     break;
                 case 6:
-                    Console.WriteLine("Enter id of book you want to take");
+                    Console.WriteLine("Enter id of book you want to take.");
                     await Take(client, GetIntegerInput(), new { isAviable = true });
                     break;
                 case 7:
-                    Console.WriteLine("Enter id of book ypu want to return");
+                    Console.WriteLine("Enter id of book ypu want to return.");
                     await Return(client, 2, GetIntegerInput());
                     break;
                 case 8:
                     return;
                 default:
-                    Console.WriteLine("Choose one of variants");
+                    Console.WriteLine("Choose one of variants.");
                     break;
             }
             Console.ReadLine();
@@ -80,7 +80,7 @@ internal class Program
     {
         int input;
         while(!int.TryParse(Console.ReadLine(), out input))        
-            Console.WriteLine("Enter correct sybmol");
+            Console.WriteLine("Enter correct sybmol.");
        return input;
     }
     private static void ShowMenu()
