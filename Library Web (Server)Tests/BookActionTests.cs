@@ -17,18 +17,26 @@ namespace Library__Web_.Tests
         public void AddBookTest()
         {
             //arrange
-            var mockLocker = new Mock<ILogger<BookAction>>();
             var mockRepository = new Mock<IBookRepository>();
-            var bookAction = new BookAction(mockRepository.Object, mockLocker.Object);
-            var newBook = new Book(-1, "Title", "Author", 2027, new string[] { "Fiction" }, false);
+            var mockLogger = new Mock<ILogger<BookAction>>();
 
-            //act
-            bookAction.AddBook(newBook as Book);
-            //assert
-            mockLocker.Verify(logger => logger.LogInformation("Add new book."), Times.Once);
-            Assert.Equals(1, newBook.Id);
+            var existingBooks = new List<Book>
+        {
+            new Book(-1, "Title", "Author", 2027, new string[] { "Fiction" }, false)
+        };
+
+            mockRepository.Setup(repo => repo.GetAll()).Returns(existingBooks);
+
+            var bookAction = new BookAction(mockRepository.Object, mockLogger.Object);
+            var newBook = new Book(-1, "newTitle", "newAuthor", 1995, new string[] { "Fictions" }, false);
+
+            // Act
+            bookAction.AddBook(newBook);
+
+            // Assert
+            Assert.AreEqual(2, newBook.Id);
             Assert.IsTrue(newBook.IsAviable);
-
+            CollectionAssert.Contains(existingBooks, newBook);
         }
     }
 }
