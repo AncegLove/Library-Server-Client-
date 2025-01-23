@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Moq;
 using Microsoft.Extensions.Logging;
+using Library_Web__Server_Tests;
 
 namespace Library__Web_.Tests
 {
@@ -18,7 +19,7 @@ namespace Library__Web_.Tests
         {
             //arrange
             var mockRepository = new Mock<IBookRepository>();
-            var mockLogger = new Mock<ILogger<BookAction>>();
+            var mockLogger = new MockLogger<BookAction>();
 
             var existingBooks = new List<Book>
         {
@@ -27,14 +28,14 @@ namespace Library__Web_.Tests
 
             mockRepository.Setup(repo => repo.GetAll()).Returns(existingBooks);
 
-            var bookAction = new BookAction(mockRepository.Object, mockLogger.Object);
+            var bookAction = new BookAction(mockRepository.Object, mockLogger);
             var newBook = new Book(-1, "newTitle", "newAuthor", 1995, new string[] { "Fictions" }, false);
 
             // Act
             bookAction.AddBook(newBook);
 
             // Assert
-            mockLogger.Verify(logger => logger.LogInformation("Add new book", Times.Once));
+            CollectionAssert.Contains(mockLogger.LoggedMessages, "Add new book.");
             Assert.AreEqual(2, newBook.Id);
             Assert.IsTrue(newBook.IsAviable);
             CollectionAssert.Contains(existingBooks, newBook);
@@ -43,20 +44,20 @@ namespace Library__Web_.Tests
         public void UpdateBookTest()
         {
             //arrange
-            var mockLogger = new Mock<ILogger<BookAction>>();
+            var mockLogger = new MockLogger<BookAction>();
             var mockRepository = new Mock<IBookRepository>();
             var existingBooks = new List<Book>
             {
                 new Book(1, "Title", "Author", 1995, new string[] {"Fiction"}, true)
             };
             mockRepository.Setup(repo => repo.GetAll()).Returns(existingBooks);
-            var bookAction = new BookAction(mockRepository.Object, mockLogger.Object);
+            var bookAction = new BookAction(mockRepository.Object, mockLogger);
             var updateBook = new Book(-1, "updateTitle", "updateAuthor", 5333, new string[] { "updateFictions" }, false);
             int bookId = 1;
             //act
             bookAction.UpdateBook(bookId, updateBook);
             //Assert
-            mockLogger.Verify(logger => logger.LogInformation($"Update book: {bookId}", Times.Once));
+            CollectionAssert.Contains(mockLogger.LoggedMessages, $"Update book: {bookId}");
             StringAssert.Equals(updateBook.Title, mockRepository.Object.GetAll().FirstOrDefault(x => x.Id == bookId).Title);
             StringAssert.Equals(updateBook.Author, mockRepository.Object.GetAll().FirstOrDefault(x => x.Id == bookId).Author);
             Assert.AreEqual(updateBook.Year, mockRepository.Object.GetAll().FirstOrDefault(x => x.Id == bookId).Year);
