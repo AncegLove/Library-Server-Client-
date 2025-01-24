@@ -1,6 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System.Text.Json;
-using System.Text;
 namespace Library__Web_
 {
     [Route("api/books")]
@@ -23,7 +21,7 @@ namespace Library__Web_
             if (books.Count == 0)
             {
                 _logger.LogWarning("Book not found.");
-                return NotFound("Library is empty.");                
+                return NotFound("Library is empty.");
             }
             _logger.LogInformation("Books sended to client.");
             return Ok(books);

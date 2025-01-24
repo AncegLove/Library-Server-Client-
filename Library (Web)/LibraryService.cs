@@ -1,5 +1,4 @@
-﻿using System.Text.Json;
-namespace Library__Web_
+﻿namespace Library__Web_
 {
 
     public interface ILibraryService
@@ -19,7 +18,7 @@ namespace Library__Web_
         public LibraryService(IBookAction action, IBookFinder finder)
         {
             _bookAction = action;
-            _bookFinder = finder;   
+            _bookFinder = finder;
         }
         public List<Book> GetAllBooks()
         {
@@ -31,7 +30,7 @@ namespace Library__Web_
         }
         public void AddNewBook(Book book)
         {
-           _bookAction.AddBook(book);
+            _bookAction.AddBook(book);
         }
         public bool Update(int id, Book book) => _bookAction.UpdateBook(id, book);
         public bool Delete(int id) => _bookAction.DeleteBook(id);

@@ -53,7 +53,7 @@
         }
         public bool TakeBook(int id)
         {
-            var book = _repository.GetAll().FirstOrDefault(x =>x.Id == id);
+            var book = _repository.GetAll().FirstOrDefault(x => x.Id == id);
             if (book == null || !book.IsAviable)
             {
                 _logger.LogWarning($"Book not found or not aviable with id: {id}");
@@ -64,7 +64,7 @@
             return true;
         }
         public bool ReturnBook(int id)
-        {           
+        {
             var book = _repository.GetAll().FirstOrDefault(x => x.Id == id);
             if (book == null || book.IsAviable)
             {

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Text;
+﻿using System.Text;
 using System.Text.Json;
 internal class Program
 {
@@ -32,7 +31,7 @@ internal class Program
                     await UpdateBook(client, bookToUpdate, idToUpdate);
                     break;
                 case 5:
-                    Console.WriteLine("Enter id of book you want to delete.");                    
+                    Console.WriteLine("Enter id of book you want to delete.");
                     await Delete(client, GetIntegerInput());
                     break;
                 case 6:
@@ -54,7 +53,7 @@ internal class Program
         }
     }
     private static object GetBookInfo()
-    {       
+    {
         Console.WriteLine("Enter book title: ");
         string title = Console.ReadLine();
         Console.WriteLine("Enter author name: ");
@@ -79,9 +78,9 @@ internal class Program
     private static int GetIntegerInput()
     {
         int input;
-        while(!int.TryParse(Console.ReadLine(), out input))        
+        while (!int.TryParse(Console.ReadLine(), out input))
             Console.WriteLine("Enter correct sybmol.");
-       return input;
+        return input;
     }
     private static void ShowMenu()
     {
@@ -97,7 +96,7 @@ internal class Program
     {
         var content = new StringContent(JsonSerializer.Serialize(name));
         var response = await client.PutAsync($"api/books/{id}/checkout", content);
-        Console.WriteLine($"TAKE BOOK WITH ID: {id}, {await response.Content.ReadAsStringAsync()}");       
+        Console.WriteLine($"TAKE BOOK WITH ID: {id}, {await response.Content.ReadAsStringAsync()}");
     }
     private static async Task Delete(HttpClient client, int id)
     {
