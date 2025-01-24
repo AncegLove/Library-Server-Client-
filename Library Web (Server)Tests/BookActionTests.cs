@@ -81,7 +81,7 @@ namespace Library__Web_.Tests
             var result = bookAction.UpdateBook(bookId, updateBook);
             //assert
             Assert.IsFalse(result);
-            CollectionAssert.DoesNotContain(mockLogger.LoggedMessages, $"Book not found with id: {bookId}");
+            CollectionAssert.Contains(mockLogger.LoggedMessages, $"Book not found with id: {bookId}");
         }
 
         [TestMethod()]
